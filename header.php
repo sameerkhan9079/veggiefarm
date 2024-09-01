@@ -109,6 +109,50 @@ if ($searchTerm) {
             border: none !important;
             box-shadow: none !important;
         }
+        /* for search bar animation */
+        .nav-search .input-group{
+            flex-wrap:nowrap;
+        }
+        #search-bar {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    font-size: 16px;
+    /* border: 2px solid #ccc; */
+    border-radius: 25px;
+    outline: none;
+    z-index: 2;
+    background-color: transparent;
+}
+
+.animated-placeholder {
+    position: absolute;
+    top: 25%;
+    left: 15px;
+    transform: translateY(50%);
+    font-size: 0.8rem;
+    color:#F0F8FF;
+    font-weight:500;
+    letter-spacing: 1.5px;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.search-container:focus-within .animated-placeholder,
+#search-bar:not(:placeholder-shown) ~ .animated-placeholder {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+.animated-placeholder.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
     </style>
 </head>
 <body>
@@ -122,8 +166,9 @@ if ($searchTerm) {
         <div class="nav-search">
             <form method="POST" class="col-md-12">
                 <div class="input-group">
-                    <input type="text" class="form-control" name="fsearch" placeholder="Search here..." value="<?php echo htmlspecialchars($searchTerm); ?>" style="border-radius: .25rem;">
+                    <input type="text" class="form-control" name="fsearch"id="search-bar" placeholder="" value="<?php echo htmlspecialchars($searchTerm); ?>" style="border-radius: .25rem;border-color:#f8f9fa">
                     <button class="btn btn-outline-light ml-2" type="submit" name="ok" id="button-addon2">Search</button>
+                    <div class="animated-placeholder"></div>
                 </div>
             </form>
         </div>
@@ -285,6 +330,28 @@ document.addEventListener('DOMContentLoaded', function() {
         cartSidebar.style.width = '0';
     });
 });
+</script>
+<script>
+    // for search animation text
+    const placeholders = ['Search "mango"', 'Search "banana"','Search "tomato"','Search "potato"','Search "grapes"','Search "orange"','Search "onion"','Search "cabbage"','Search "chilli"','Search "apple"'];
+let index = 0;
+
+const placeholderDiv = document.querySelector('.animated-placeholder');
+
+function changePlaceholder() {
+    placeholderDiv.classList.remove('show');
+    
+    setTimeout(() => {
+        placeholderDiv.textContent = placeholders[index];
+        placeholderDiv.classList.add('show');
+        index = (index + 1) % placeholders.length;
+    }, 500); // Wait for the previous text to disappear before showing the new one
+}
+
+setInterval(changePlaceholder, 2500); 
+
+// Initially set the placeholder
+changePlaceholder();
 </script>
 </body>
 </html>
