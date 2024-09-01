@@ -194,7 +194,7 @@
 .login-row-3 span{
       font-size:0.6rem;
     }
-    .form-container input::placeholder{
+    .form-container .animated-placeholder{{
       font-size:0.8rem;
     }
   }
@@ -203,7 +203,7 @@
     .login-full-con .login-row-2 ,.full-con .row-2{
      width: 90%;
     }
-    .form-container input::placeholder{
+    .form-container .animated-placeholder{
       font-size:0.6rem;
     }
   }
